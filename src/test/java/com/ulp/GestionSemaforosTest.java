@@ -136,4 +136,5 @@ public class GestionSemaforosTest {
 
         assertEquals(3, gestion.contarDenunciasHistoricas(101));
     }
+
 }
