@@ -21,6 +21,8 @@ public class OrdenDeComposicion {
         this.fechaReparacionProgramada = fProg;
         this.detalle = detalle;
         this.denunciaAsociada = d;
+        // La orden nace referenciando su denuncia, pero el enlace inverso
+        // (denuncia -> orden) lo realiza explícitamente el servicio al asignarla.
     }
 
     /** Asigna un equipo a la orden y lo deja ocupado. */

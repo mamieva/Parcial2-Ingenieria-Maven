@@ -7,7 +7,7 @@ import java.util.List;
  * Semáforo municipal. Está compuesto físicamente por 3 luces (composición
  * irreversible) y mantiene el historial de denuncias asociadas a sus fallas.
  */
-public class Semaforo {
+public class    Semaforo {
 
     private int nro;
     private String estado;

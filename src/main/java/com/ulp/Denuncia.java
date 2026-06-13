@@ -13,6 +13,9 @@ public class Denuncia {
     // Registro general de todas las denuncias del sistema (para las búsquedas)
     private static final List<Denuncia> TODAS = new ArrayList<>();
 
+    // Niveles de prioridad válidos que reconoce la Municipalidad
+    private static final List<String> PRIORIDADES_VALIDAS = List.of("Alta", "Media", "Baja");
+
     private String codD;
     private Date fechaDenuncia;
     private String calleX;
@@ -22,6 +25,7 @@ public class Denuncia {
 
     private Denunciante denunciante;
     private Semaforo semaforoAsociado;
+    private OrdenDeComposicion ordenAsignada; // 0..1: se setea al crear la orden
 
     public Denuncia(String codD, Date fecha, String calleX, String calleY,
                     String problema, String prioridad, Denunciante d, Semaforo s) {
@@ -47,6 +51,24 @@ public class Denuncia {
 
     public Denunciante getDenunciante() {
         return denunciante;
+    }
+
+    /**
+     * Liga una orden a esta denuncia. La llama el constructor de
+     * OrdenDeComposicion. Si la denuncia ya tenía una orden, lanza
+     * OrdenYaAsignadaException (multiplicidad "1" del UML).
+     */
+    void asignarOrden(OrdenDeComposicion orden) {
+        if (ordenAsignada != null) {
+            throw new OrdenYaAsignadaException(
+                    "La denuncia " + codD + " ya tiene asignada la orden #"
+                            + ordenAsignada.getNroDeOrden() + ".");
+        }
+        ordenAsignada = orden;
+    }
+
+    public OrdenDeComposicion getOrdenAsignada() {
+        return ordenAsignada;
     }
 
     /** Devuelve todas las denuncias hechas sobre un semáforo dado. */
@@ -90,6 +112,16 @@ public class Denuncia {
 
     public String getPrioridadReparacion() {
         return prioridadReparacion;
+    }
+
+    /**
+     * Indica si la prioridad de la denuncia es uno de los tres niveles estrictos
+     * que reconoce el sistema ("Alta", "Media" o "Baja"). Cualquier otro valor se
+     * considera inválido. La comparación ignora mayúsculas/minúsculas.
+     */
+    public boolean esPrioridadValida() {
+        return prioridadReparacion != null
+                && PRIORIDADES_VALIDAS.stream().anyMatch(prioridadReparacion::equalsIgnoreCase);
     }
 
     public String getCalleX() {
