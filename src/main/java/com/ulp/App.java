@@ -7,7 +7,6 @@ import java.util.List;
  * Pequeña demostración del flujo completo del sistema de semáforos.
  */
 public class App {
-
     public static void main(String[] args) {
         // 1) Un semáforo (nace con sus 3 luces por composición)
         Semaforo s = new Semaforo(101, "FALLANDO", "Av. Siempreviva y Calle 1", "220V");
